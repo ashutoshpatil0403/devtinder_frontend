@@ -8,8 +8,8 @@ import { showError, showSuccess } from "../../utils/toast";
 
 const LoginPage = () => {
   // const navigate = useNavigate();
-  const [emailId, setEmailId] = useState("Ashutosh@gmail.com");
-  const [password, setPassword] = useState("Ashutosh@123");
+  const [emailId, setEmailId] = useState("");
+  const [password, setPassword] = useState("");
   const [viewPassword, setViewPassword] = useState(false);
   const [error, setError] = useState();
   const dispatch = useDispatch();
