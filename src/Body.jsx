@@ -8,6 +8,7 @@ import { addUser } from "./redux/slices/UserSlice";
 import { useCallback, useEffect } from "react";
 import Footer from "./components/Footer";
 import { showError } from "./utils/toast";
+import { BASE_URL } from "./utils/constants";
 
 const Body = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const Body = () => {
 
   const fetchUserData = useCallback(async () => {
     try {
-      const res = await axios.get("http://localhost:7000/profile/view", {
+      const res = await axios.get(BASE_URL + "profile/view", {
         withCredentials: true,
       });
       dispatch(addUser(res?.data?.data));
