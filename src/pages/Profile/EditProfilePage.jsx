@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../utils/constants";
 import { useSelector } from "react-redux";
 import FeedCard from "../Feed/FeedCard";
 import { showError, showSuccess } from "../../utils/toast";
 
+const EMPTY_USER = {};
+
 const EditProfilePage = () => {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user) || EMPTY_USER;
 
   const [firstName, setFirstName] = useState(user.firstName || "");
   const [lastName, setLastName] = useState(user.lastName || "");
@@ -15,6 +17,16 @@ const EditProfilePage = () => {
   const [skills, setSkills] = useState(user.skills || []);
   const [photoURL, setPhotoURL] = useState(user.photoURL || "");
   const [about, setAbout] = useState(user.about || "");
+
+  useEffect(() => {
+    setFirstName(user.firstName || "");
+    setLastName(user.lastName || "");
+    setAge(user.age || "");
+    setGender(user.gender || "");
+    setSkills(user.skills || []);
+    setPhotoURL(user.photoURL || "");
+    setAbout(user.about || "");
+  }, [user]);
 
   const handleSubmit = async () => {
     try {
@@ -35,7 +47,8 @@ const EditProfilePage = () => {
       console.log(res?.data);
       showSuccess("Profile updated successfully");
     } catch (error) {
-      const message = error?.response?.data?.message || "Failed to update profile";
+      const message =
+        error?.response?.data?.message || "Failed to update profile";
       showError(message);
       console.log(error);
     }
